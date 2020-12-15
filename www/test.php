@@ -67,7 +67,7 @@ require("config.php");
           vAxis: {
             title: 'Accumulated Rating',
             minValue: 0,
-            maxValue: 1024
+            maxValue: <?php echo $MAX_ADC_VALUE; ?> 
           },
           isStacked: true
         };
