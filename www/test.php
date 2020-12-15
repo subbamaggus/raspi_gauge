@@ -37,7 +37,8 @@ require("config.php");
         ]);
 
         var options = {
-          width: 400, height: 240,
+          width: 400, 
+          height: 240,
           minorTicks: 5
         };
 
@@ -51,7 +52,11 @@ require("config.php");
 
         var options2 = {
           title: 'Ozon Concentration',
-          vAxis: {title: 'Accumulated Rating'},
+          vAxis: {
+            title: 'Accumulated Rating',
+            minValue: 0,
+            maxValue: 1024
+          },
           isStacked: true
         };
 
