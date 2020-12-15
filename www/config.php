@@ -1,0 +1,8 @@
+<?php
+
+$MAX_ADC_VALUE = 1023;
+$DEFAULT_HISTORY_LENGTH = 180;
+$DATA_FILE = "spi_data";
+$POLLING_RATE = 1000;
+
+?>

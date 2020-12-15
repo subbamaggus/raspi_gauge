@@ -50,7 +50,9 @@ require("config.php");
       function changeBufferSize(diff) {
         history_length = history_length + diff;
         data_body = initRollingDataArray(history_length);
-        data_history = google.visualization.arrayToDataTable(data_body); 
+        data_history = google.visualization.arrayToDataTable(data_body);
+
+        console.log('changeBufferSize:' + history_length);
       }
         
       function pollDataSource() {
@@ -73,6 +75,8 @@ require("config.php");
         clearInterval(intervalID);
         pollingRate = pollingRate + diff;
         intervalID = setInterval(pollDataSource, pollingRate);
+
+        console.log('changePollRate:' + pollingRate);
       }
 
       function drawChart() {
@@ -116,11 +120,12 @@ require("config.php");
     <center>
       <div id="chart_gauge" style="width: 300px; height: 200px;"></div>
       <div id="chart_history" style="width: 300px; height: 300px;"></div>
-      <input type="button" value="more" onclick="changeBufferSize(30)" />
-      <input type="button" value="less" onclick="changeBufferSize(-30)" />
-      </br>
-      <input type="button" value="slower" onClick="changePollRate(500)" />
-      <input type="button" value="faster" onClick="changePollRate(-500)" />
+      <input type="image" width="12" height="12" src="plus.png" value="more" onclick="changeBufferSize(30)" />
+      <input type="image" width="12" height="12" src="time.png" value="more" onclick="changeBufferSize(30)" />
+      <input type="image" width="12" height="12" src="minus.png" value="less" onclick="changeBufferSize(-30)" />
+      |
+      <input type="image" width="12" height="12" src="slower.png" value="slower" onClick="changePollRate(500)" />
+      <input type="image" width="12" height="12" src="faster.png" value="faster" onClick="changePollRate(-500)" />
     </center>
   </body>
 </html>
