@@ -14,10 +14,11 @@
       var myValue = 0;
 
       function appendValue(data, length, last_value) {
-        for(var i = 0; i < (length - 1); i++)
+        for(var i = 0; i < (length - 1); i++) {
           data.setValue(i, 1, data.getValue(i+1, 1));
+        }
 
-          data.setValue((length - 1), 1, last_value);
+        data.setValue((length - 1), 1, last_value);
 
         return data;
       }
@@ -60,8 +61,6 @@
             data_body.push(['' + i, 0]);
         }
 
-        console.log(data_body.toString());
-
         var data2 = google.visualization.arrayToDataTable(data_body);
 
         chart2.draw(data2, options2);
@@ -69,7 +68,7 @@
 
         setInterval(function() {
 
-          $.getJSON('http://192.168.178.69/api.php', function(data) {
+          $.getJSON('http://<?php echo $_SERVER['SERVER_ADDR']; ?>/api.php', function(data) {
             myValue = data.value;
           });
 
