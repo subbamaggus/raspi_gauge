@@ -69,15 +69,11 @@ require("config.php");
 
         data_gauge.setValue(0, 1, myPercentValue);
         chart_gauge.draw(data_gauge, options_gauge);
-
-        console.log('pollDataSource')
       }
-
 
       function changePollRate(diff) {
         clearInterval(intervalID);
         pollingRate = pollingRate + diff;
-        console.log('new Poll Rate: ' + pollingRate);
         intervalID = setInterval(pollDataSource, pollingRate);
       }
 
