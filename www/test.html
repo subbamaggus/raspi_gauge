@@ -11,6 +11,8 @@
       google.charts.load('current', {'packages':['corechart']});
       google.charts.setOnLoadCallback(drawChart);
 
+      var myValue = 0;
+
       function appendValue(data, length, last_value) {
         for(var i = 0; i < (length - 1); i++)
           data.setValue(i, 1, data.getValue(i+1, 1));
@@ -64,13 +66,17 @@
 
         chart2.draw(data2, options2);
 
-        setInterval(function() {
-          var new_value = 40 + Math.round(60 * Math.random());
 
-          data2 = appendValue(data2, history_length, new_value);
+        setInterval(function() {
+
+          $.getJSON('http://192.168.178.69/api.php', function(data) {
+            myValue = data.value;
+          });
+
+          data2 = appendValue(data2, history_length, myValue);
           chart2.draw(data2, options2);
 
-          data.setValue(0, 1, new_value);
+          data.setValue(0, 1, myValue);
           chart.draw(data, options);
         }, 1000);
       }
