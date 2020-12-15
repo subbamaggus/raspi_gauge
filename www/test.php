@@ -6,7 +6,7 @@ require("config.php");
   <head>
     <meta name="viewport" content="initial-scale=1, maximum-scale=2">
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
       google.charts.load('current', {'packages':['corechart','gauge']});
@@ -59,15 +59,17 @@ require("config.php");
         
       function pollDataSource() {
 
-        $.getJSON('http://<?php echo $_SERVER['SERVER_ADDR']; ?>/api.php', function(data) {
-          myRawValue = data.raw;
-          myPercentValue = data.linear * 100;
-        });
+        var jsonData = $.ajax({
+          url: "api.php",
+          dataType: "json",
+          async: false
+          }).responseText;
+        var myObj = JSON.parse(jsonData);
 
-        data_history = appendRollingValue(data_history, history_length, myRawValue);
+        data_history = appendRollingValue(data_history, history_length, myObj.raw);
         chart_history.draw(data_history, options_history);
 
-        data_gauge.setValue(0, 1, myPercentValue);
+        data_gauge.setValue(0, 1, myObj.linear * 100);
         chart_gauge.draw(data_gauge, options_gauge);
       }
 
