@@ -30,7 +30,6 @@ require("config.php");
 
       function drawChart() {
 
-
         var data = google.visualization.arrayToDataTable([
           ['Label', 'Value'],
           ['Ozon', 80]
