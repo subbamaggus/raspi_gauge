@@ -1,6 +1,10 @@
-<html>
+<?php
+
+require("config.php");
+
+?><html>
   <head>
-    <meta name="viewport" content="initial-scale=2, maximum-scale=2">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=2">
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
@@ -11,7 +15,8 @@
       google.charts.load('current', {'packages':['corechart']});
       google.charts.setOnLoadCallback(drawChart);
 
-      var myValue = 0;
+      var myRawValue = 0;
+      var myPercentValue = 0;
 
       function appendRollingValue(data, length, last_value) {
         for(var i = 0; i < (length - 1); i++) {
@@ -32,9 +37,7 @@
         ]);
 
         var options = {
-          width: 400, height: 120,
-          redFrom: 90, redTo: 100,
-          yellowFrom:75, yellowTo: 90,
+          width: 400, height: 240,
           minorTicks: 5
         };
 
@@ -44,7 +47,7 @@
 
 
         // second chart
-        var history_length = 40;
+        var history_length = <?php echo $DEFAULT_HISTORY_LENGTH; ?>;
 
         var options2 = {
           title: 'Ozon Concentration',
@@ -54,7 +57,7 @@
 
         var chart2 = new google.visualization.SteppedAreaChart(document.getElementById('chart_div_step'));
 
-        var data_head = ['Time',  'Ozon Concentration'];
+        var data_head = ['Time',  'Raw'];
         var data_body = [data_head];
 
         for(var i = history_length; i > 0; i--) {
@@ -69,13 +72,14 @@
         setInterval(function() {
 
           $.getJSON('http://<?php echo $_SERVER['SERVER_ADDR']; ?>/api.php', function(data) {
-            myValue = data.value;
+            myRawValue = data.raw;
+            myPercentValue = data.linear * 100;
           });
 
-          data2 = appendRollingValue(data2, history_length, myValue);
+          data2 = appendRollingValue(data2, history_length, myRawValue);
           chart2.draw(data2, options2);
 
-          data.setValue(0, 1, myValue);
+          data.setValue(0, 1, myPercentValue);
           chart.draw(data, options);
         }, 1000);
       }
@@ -83,8 +87,8 @@
   </head>
   <body>
     <center>
-      <div id="chart_div" style="width: 200px; height: 120px;"></div>
-      <div id="chart_div_step" style="width: 200px; height: 150px;"></div>
+      <div id="chart_div" style="width: 400px; height: 240px;"></div>
+      <div id="chart_div_step" style="width: 400px; height: 300px;"></div>
     </center>
   </body>
 </html>
