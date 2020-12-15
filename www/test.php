@@ -13,7 +13,7 @@
 
       var myValue = 0;
 
-      function appendValue(data, length, last_value) {
+      function appendRollingValue(data, length, last_value) {
         for(var i = 0; i < (length - 1); i++) {
           data.setValue(i, 1, data.getValue(i+1, 1));
         }
@@ -72,7 +72,7 @@
             myValue = data.value;
           });
 
-          data2 = appendValue(data2, history_length, myValue);
+          data2 = appendRollingValue(data2, history_length, myValue);
           chart2.draw(data2, options2);
 
           data.setValue(0, 1, myValue);
@@ -83,7 +83,6 @@
   </head>
   <body>
     <center>
-
       <div id="chart_div" style="width: 200px; height: 120px;"></div>
       <div id="chart_div_step" style="width: 200px; height: 150px;"></div>
     </center>
