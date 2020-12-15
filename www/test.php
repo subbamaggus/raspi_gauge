@@ -15,9 +15,6 @@ require("config.php");
       var history_length = <?php echo $DEFAULT_HISTORY_LENGTH; ?>;
       var pollingRate = <?php echo $POLLING_RATE; ?>;
 
-      var myRawValue = 0;
-      var myPercentValue = 0;
-      
       var data_body = initRollingDataArray(history_length);
         
       var data_history;
@@ -29,7 +26,6 @@ require("config.php");
       var options_gauge;
 		
       var intervalID;
-
         
       function initRollingDataArray(length) {
         var data_head = ['Time',  'Raw'];
@@ -98,6 +94,8 @@ require("config.php");
         // second chart
         options_history = {
           title: 'Ozon Concentration',
+          backgroundColor: '#eee',
+          legend: { position: 'bottom' },
           vAxis: {
             title: 'Accumulated Rating',
             minValue: 0,
