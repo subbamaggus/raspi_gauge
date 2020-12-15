@@ -1,6 +1,5 @@
 <html>
 <body>
-<?php echo "hello world"; ?>
-<a href="test.html">link</a>
+<a href="test.php">link</a>
 </body>
 </html>
