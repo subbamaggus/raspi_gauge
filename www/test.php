@@ -98,10 +98,8 @@ require("config.php");
         // second chart
         options_history = {
           title: 'Ozon Concentration',
-          backgroundColor: '#eee',
           legend: { position: 'bottom' },
           vAxis: {
-            title: 'Accumulated Rating',
             minValue: 0,
             maxValue: <?php echo $MAX_ADC_VALUE; ?> 
           },
@@ -119,13 +117,13 @@ require("config.php");
   <body>
     <center>
       <div id="chart_gauge" style="width: 300px; height: 200px;"></div>
-      <div id="chart_history" style="width: 300px; height: 300px;"></div>
-      <input type="image" width="12" height="12" src="plus.png" value="more" onclick="changeBufferSize(30)" />
-      <input type="image" width="12" height="12" src="time.png" value="more" onclick="changeBufferSize(30)" />
-      <input type="image" width="12" height="12" src="minus.png" value="less" onclick="changeBufferSize(-30)" />
+      <div id="chart_history" style="width: 400px; height: 250px;"></div>
+      <input type="image" width="12" height="12" src="plus.png" onclick="changeBufferSize(30)" />
+      <input type="image" width="12" height="12" src="time.png" />
+      <input type="image" width="12" height="12" src="minus.png" onclick="changeBufferSize(-30)" />
       |
-      <input type="image" width="12" height="12" src="slower.png" value="slower" onClick="changePollRate(500)" />
-      <input type="image" width="12" height="12" src="faster.png" value="faster" onClick="changePollRate(-500)" />
+      <input type="image" width="12" height="12" src="slower.png" onClick="changePollRate(500)" />
+      <input type="image" width="12" height="12" src="faster.png" onClick="changePollRate(-500)" />
     </center>
   </body>
 </html>
