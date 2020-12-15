@@ -69,8 +69,18 @@ require("config.php");
 
         data_gauge.setValue(0, 1, myPercentValue);
         chart_gauge.draw(data_gauge, options_gauge);
+
+        console.log('pollDataSource')
       }
-        
+
+
+      function changePollRate(diff) {
+        clearInterval(intervalID);
+        pollingRate = pollingRate + diff;
+        console.log('new Poll Rate: ' + pollingRate);
+        intervalID = setInterval(pollDataSource, pollingRate);
+      }
+
       function drawChart() {
 
         data_gauge = google.visualization.arrayToDataTable([
@@ -114,7 +124,7 @@ require("config.php");
       <input type="button" value="less" onclick="changeBufferSize(-30)" />
       </br>
       <input type="button" value="slower" onClick="changePollRate(500)" />
-      <input type="button" value="faster" onClick="changePollRate)-500)" />
+      <input type="button" value="faster" onClick="changePollRate(-500)" />
     </center>
   </body>
 </html>
