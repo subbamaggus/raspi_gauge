@@ -18,7 +18,7 @@ mylog(0, $data);
 
 $result = [ "date" => date("Y-m-d H:i:s"),
             "raw" => $data,
-            "linear" => ($data + 1) / 1023
+            "linear" => ($data + 1) / $MAX_ADC_VALUE
           ];
 
 $myresult = json_encode($result);
