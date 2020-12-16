@@ -2,7 +2,7 @@
 
 $MAX_ADC_VALUE = 1023;
 $DEFAULT_HISTORY_LENGTH = 180;
-$DATA_FILE = "spi_data";
+$DATA_FILE = "smbus_A0.current";
 $POLLING_RATE = 1000;
 
 ?>
