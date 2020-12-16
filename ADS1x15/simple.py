@@ -30,7 +30,7 @@ adc = ADS1015()
 # See table 3 in the ADS1015/ADS1115 datasheet for more info on gain.
 GAIN = 1
 
-smbus_analog_0= open("/var/www/html/smbus_A0.csv","w+")
+smbus_analog_0= open("/var/www/html/smbus_A0.csv","a+")
 smbus_analog_0_curr= open("/var/www/html/smbus_A0.current","w")
 
 print('Reading ADS1x15 values, press Ctrl-C to quit...')
