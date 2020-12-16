@@ -53,7 +53,7 @@ while True:
         # Each value will be a 12 or 16 bit signed integer value depending on the
         # ADC (ADS1015 = 12-bit, ADS1115 = 16-bit).
     # Print the ADC values.
-    print('| {0:>6} |'.format(value))
+    print('| {} | {}'.format(value, date))
     #appending for data history
     smbus_analog_0.write('{},{}\n'.format(date, value))
     
