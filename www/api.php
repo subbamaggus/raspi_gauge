@@ -9,20 +9,25 @@ function mylog($log_lvl, $log_msg) {
     error_log($log_msg);
 }
 
+function getDataFromFile($filename) {
+    $data = file_get_contents($filename);
+    $data = substr($data, 0, -1); 
+    mylog(0, $data);
+
+    return $data;    
+}
+
 if (isset($_GET['loglvl']))
   $lvl = $_GET['loglvl'];
 
-$data_raw = file_get_contents($DATA_FILE_RAW);
-$data_raw = substr($data_raw, 0, -1); 
-mylog(0, $data_raw);
-
-$data_ppm = file_get_contents($DATA_FILE_PPM);
-$data_ppm = substr($data_ppm, 0, -1); 
-mylog(0, $data_ppm);
+$data_raw = getDataFromFile($DATA_FILE_RAW);
+$data_ppm = getDataFromFile($DATA_FILE_PPM);
+$data_ugpm3 = getDataFromFile($DATA_FILE_UGPM3);
 
 $result = [ "date" => date("Y-m-d H:i:s"),
             "raw" => $data_raw,
             "ppm" => $data_ppm,
+            "ugpm3" => $data_ugpm3,
             "linear" => ($data_raw + 1) / $MAX_ADC_VALUE
           ];
 

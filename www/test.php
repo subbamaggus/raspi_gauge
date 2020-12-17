@@ -67,7 +67,7 @@ require("config.php");
         data_history = appendRollingValue(data_history, history_length, myObj.raw);
         chart_history.draw(data_history, options_history);
 
-        data_gauge.setValue(0, 1, myObj.linear * 100);
+        data_gauge.setValue(0, 1, myObj.ugpm3);
         chart_gauge.draw(data_gauge, options_gauge);
       }
 
@@ -89,6 +89,9 @@ require("config.php");
         options_gauge = {
           width: 300, 
           height: 200,
+          max: 400,
+          yellowFrom:180, yellowTo: 240,
+          redFrom: 240, redTo: 400,
           minorTicks: 5
         };
 

@@ -38,6 +38,11 @@ try:
         smbus_analog_0_curr.write('{}\n'.format(int(perc["OZONE"])))
         smbus_analog_0_curr.close()
     
+        # ppm to ugpm3 >> 200ug/m3 ~ 0.1 ppm
+        smbus_analog_0_curr= open("smbus_A0.ugpm3","w")
+        smbus_analog_0_curr.write('{}\n'.format(int(perc["OZONE"] * 2000)))
+        smbus_analog_0_curr.close()
+    
         time.sleep(0.5)
 
 except:
