@@ -46,7 +46,7 @@ class MQ():
                                             # to the original curve.
                                             # data format:[ x, y, slope]; point1: (lg200, 0.53), point2: (lg10000,  -0.22)  
         # https://forum.arduino.cc/index.php?topic=469459.0
-        self.OzoneCurve = [2.3,0.60,0.45] # rough estimate for first shot
+        self.OzoneCurve = [2.3,3.6,0.45] # rough estimate for first shot
                 
         print("Calibrating...")
         self.Ro = self.MQCalibration(self.MQ_PIN)

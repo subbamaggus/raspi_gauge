@@ -64,7 +64,7 @@ require("config.php");
           }).responseText;
         var myObj = JSON.parse(jsonData);
 
-        data_history = appendRollingValue(data_history, history_length, myObj.raw);
+        data_history = appendRollingValue(data_history, history_length, myObj.ugpm3);
         chart_history.draw(data_history, options_history);
 
         data_gauge.setValue(0, 1, myObj.ugpm3);
@@ -86,12 +86,13 @@ require("config.php");
           ['O3 µg/m³', 80]
         ]);
 
+        // source for yellow and red: https://www.lfu.bayern.de/luft/doc/ozoninfo.pdf
         options_gauge = {
           width: 300, 
           height: 200,
-          max: 400,
+          max: <?php echo $MAX_CHART_VALUE; ?>,
           yellowFrom:180, yellowTo: 240,
-          redFrom: 240, redTo: 400,
+          redFrom: 240, redTo: <?php echo $MAX_CHART_VALUE; ?>,
           minorTicks: 5
         };
 
@@ -100,11 +101,11 @@ require("config.php");
 
         // second chart
         options_history = {
-          title: 'Ozon Concentration',
+          title: 'O3 µg/m³',
           legend: { position: 'bottom' },
           vAxis: {
             minValue: 0,
-            maxValue: <?php echo $MAX_ADC_VALUE; ?> 
+            maxValue: <?php echo $MAX_CHART_VALUE; ?> 
           },
           isStacked: true
         };
