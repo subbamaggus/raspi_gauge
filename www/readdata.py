@@ -14,7 +14,7 @@ adc = ADS1015()
 
 GAIN = 1
 
-smbus_analog_0= open("/var/www/html/smbus_A0.csv","a+")
+smbus_analog_0= open("smbus_A0.csv","a+")
 
 print('Reading ADS1x15 values, press Ctrl-C to quit...')
 
@@ -25,7 +25,7 @@ while True:
 
     smbus_analog_0.write('{},{}\n'.format(date, value))
 
-    smbus_analog_0_curr= open("/var/www/html/smbus_A0.current","w")
+    smbus_analog_0_curr= open("smbus_A0.current","w")
     smbus_analog_0_curr.write('{}\n'.format(value))
     smbus_analog_0_curr.close()
 

@@ -118,12 +118,12 @@ require("config.php");
     <center>
       <div id="chart_gauge" style="width: 300px; height: 200px;"></div>
       <div id="chart_history" style="width: 400px; height: 250px;"></div>
-      <input type="image" width="12" height="12" src="plus.png" onclick="changeBufferSize(30)" />
-      <input type="image" width="12" height="12" src="time.png" />
-      <input type="image" width="12" height="12" src="minus.png" onclick="changeBufferSize(-30)" />
+      <input type="image" width="12" height="12" src="icon/plus.png" onclick="changeBufferSize(30)" />
+      <input type="image" width="12" height="12" src="icon/time.png" />
+      <input type="image" width="12" height="12" src="icon/minus.png" onclick="changeBufferSize(-30)" />
       |
-      <input type="image" width="12" height="12" src="slower.png" onClick="changePollRate(500)" />
-      <input type="image" width="12" height="12" src="faster.png" onClick="changePollRate(-500)" />
+      <input type="image" width="12" height="12" src="icon/slower.png" onClick="changePollRate(500)" />
+      <input type="image" width="12" height="12" src="icon/faster.png" onClick="changePollRate(-500)" />
     </center>
   </body>
 </html>
