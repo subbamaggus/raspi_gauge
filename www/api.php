@@ -12,13 +12,18 @@ function mylog($log_lvl, $log_msg) {
 if (isset($_GET['loglvl']))
   $lvl = $_GET['loglvl'];
 
-$data = file_get_contents($DATA_FILE);
-$data = substr($data, 0, -1); 
-mylog(0, $data);
+$data_raw = file_get_contents($DATA_FILE_RAW);
+$data_raw = substr($data_raw, 0, -1); 
+mylog(0, $data_raw);
+
+$data_ppm = file_get_contents($DATA_FILE_PPM);
+$data_ppm = substr($data_ppm, 0, -1); 
+mylog(0, $data_ppm);
 
 $result = [ "date" => date("Y-m-d H:i:s"),
-            "raw" => $data,
-            "linear" => ($data + 1) / $MAX_ADC_VALUE
+            "raw" => $data_raw,
+            "ppm" => $data_ppm,
+            "linear" => ($data_raw + 1) / $MAX_ADC_VALUE
           ];
 
 $myresult = json_encode($result);
