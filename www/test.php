@@ -91,8 +91,9 @@ require("config.php");
           width: 300, 
           height: 200,
           max: <?php echo $MAX_CHART_VALUE; ?>,
-          yellowFrom:180, yellowTo: 240,
-          redFrom: 240, redTo: <?php echo $MAX_CHART_VALUE; ?>,
+          greenFrom:    0, greenTo:   40,
+          yellowFrom: 180, yellowTo: 240,
+          redFrom:    240, redTo:    <?php echo $MAX_CHART_VALUE; ?>,
           minorTicks: 5
         };
 
