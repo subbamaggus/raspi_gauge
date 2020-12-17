@@ -83,7 +83,7 @@ require("config.php");
 
         data_gauge = google.visualization.arrayToDataTable([
           ['Label', 'Value'],
-          ['Ozon', 80]
+          ['O3 µg/m³', 80]
         ]);
 
         options_gauge = {
