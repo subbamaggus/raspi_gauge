@@ -6,6 +6,15 @@ require("config.php");
   <head>
     <meta name="viewport" content="initial-scale=1, maximum-scale=2">
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <style>
+        label {
+            width:100px;
+            text-align: right;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: xx-small;
+        }
+    </style>
+
     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
@@ -14,6 +23,7 @@ require("config.php");
 
       var history_length = <?php echo $DEFAULT_HISTORY_LENGTH; ?>;
       var pollingRate = <?php echo $POLLING_RATE; ?>;
+      
 
       var data_body = initRollingDataArray(history_length);
         
@@ -77,6 +87,7 @@ require("config.php");
         intervalID = setInterval(pollDataSource, pollingRate);
 
         console.log('changePollRate:' + pollingRate);
+        document.getElementById("refresh_rate").innerHTML = "RefreshRate: " + pollingRate;
       }
 
       function drawChart() {
@@ -115,6 +126,7 @@ require("config.php");
         data_history = google.visualization.arrayToDataTable(data_body);
         chart_history.draw(data_history, options_history);
 
+        document.getElementById("refresh_rate").innerHTML = "RefreshRate: " + pollingRate;
         intervalID = setInterval(pollDataSource, pollingRate);
       }
     </script>
@@ -129,6 +141,7 @@ require("config.php");
       |
       <input type="image" width="12" height="12" src="icon/slower.png" onClick="changePollRate(500)" />
       <input type="image" width="12" height="12" src="icon/faster.png" onClick="changePollRate(-500)" />
+      <label id="refresh_rate"></label>
     </center>
   </body>
 </html>
