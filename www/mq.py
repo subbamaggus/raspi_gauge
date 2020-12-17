@@ -15,7 +15,7 @@ class MQ():
                                             # which is derived from the chart in datasheet
  
     ######################### Software Related Macros #########################
-    CALIBARAION_SAMPLE_TIMES     = 50       # define how many samples you are going to take in the calibration phase
+    CALIBARAION_SAMPLE_TIMES     = 5       # define how many samples you are going to take in the calibration phase
     CALIBRATION_SAMPLE_INTERVAL  = 500      # define the time interval(in milisecond) between each samples in the
                                             # cablibration phase
     READ_SAMPLE_INTERVAL         = 50       # define the time interval(in milisecond) between each samples in
@@ -46,7 +46,7 @@ class MQ():
                                             # to the original curve.
                                             # data format:[ x, y, slope]; point1: (lg200, 0.53), point2: (lg10000,  -0.22)  
         # https://forum.arduino.cc/index.php?topic=469459.0
-        self.OzoneCurve = [1.7,0.30,0.45] # rough estimate for first shot
+        self.OzoneCurve = [2.3,0.60,0.45] # rough estimate for first shot
                 
         print("Calibrating...")
         self.Ro = self.MQCalibration(self.MQ_PIN)
@@ -71,7 +71,7 @@ class MQ():
     #          could be derived.
     ############################################################################ 
     def MQResistanceCalculation(self, raw_adc):
-        return float(self.RL_VALUE*(1023.0-raw_adc)/float(raw_adc));
+        return float(self.RL_VALUE*(65535.0-raw_adc)/float(raw_adc));
      
      
     ######################### MQCalibration ####################################
