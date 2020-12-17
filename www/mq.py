@@ -3,7 +3,8 @@
 
 import time
 import math
-from MCP3008 import MCP3008
+#from MCP3008 import MCP3008
+from ADS1x15 import ADS1015
 
 class MQ():
 
@@ -25,11 +26,12 @@ class MQ():
     GAS_LPG                      = 0
     GAS_CO                       = 1
     GAS_SMOKE                    = 2
+    GAS_OZONE                    = 3
 
     def __init__(self, Ro=10, analogPin=0):
         self.Ro = Ro
         self.MQ_PIN = analogPin
-        self.adc = MCP3008()
+        self.adc = ADS1015()
         
         self.LPGCurve = [2.3,0.21,-0.47]    # two points are taken from the curve. 
                                             # with these two points, a line is formed which is "approximately equivalent"
@@ -39,10 +41,12 @@ class MQ():
                                             # with these two points, a line is formed which is "approximately equivalent" 
                                             # to the original curve.
                                             # data format:[ x, y, slope]; point1: (lg200, 0.72), point2: (lg10000,  0.15)
-        self.SmokeCurve =[2.3,0.53,-0.44]   # two points are taken from the curve. 
+        self.SmokeCurve = [2.3,0.53,-0.44]   # two points are taken from the curve. 
                                             # with these two points, a line is formed which is "approximately equivalent" 
                                             # to the original curve.
                                             # data format:[ x, y, slope]; point1: (lg200, 0.53), point2: (lg10000,  -0.22)  
+        # https://forum.arduino.cc/index.php?topic=469459.0
+        self.OzoneCurve = [1.7,0.30,0.45] # rough estimate for first shot
                 
         print("Calibrating...")
         self.Ro = self.MQCalibration(self.MQ_PIN)
@@ -56,6 +60,7 @@ class MQ():
         val["GAS_LPG"]  = self.MQGetGasPercentage(read/self.Ro, self.GAS_LPG)
         val["CO"]       = self.MQGetGasPercentage(read/self.Ro, self.GAS_CO)
         val["SMOKE"]    = self.MQGetGasPercentage(read/self.Ro, self.GAS_SMOKE)
+        val["OZONE"]    = self.MQGetGasPercentage(read/self.Ro, self.GAS_OZONE)
         return val
         
     ######################### MQResistanceCalculation #########################
@@ -80,7 +85,8 @@ class MQ():
     def MQCalibration(self, mq_pin):
         val = 0.0
         for i in range(self.CALIBARAION_SAMPLE_TIMES):          # take multiple samples
-            val += self.MQResistanceCalculation(self.adc.read(mq_pin))
+            print('i...{}'.format(i))
+            val += self.MQResistanceCalculation(self.adc.read_adc(mq_pin, 1))
             time.sleep(self.CALIBRATION_SAMPLE_INTERVAL/1000.0)
             
         val = val/self.CALIBARAION_SAMPLE_TIMES                 # calculate the average value
@@ -103,7 +109,7 @@ class MQ():
         rs = 0.0
 
         for i in range(self.READ_SAMPLE_TIMES):
-            rs += self.MQResistanceCalculation(self.adc.read(mq_pin))
+            rs += self.MQResistanceCalculation(self.adc.read_adc(mq_pin))
             time.sleep(self.READ_SAMPLE_INTERVAL/1000.0)
 
         rs = rs/self.READ_SAMPLE_TIMES
@@ -124,6 +130,8 @@ class MQ():
             return self.MQGetPercentage(rs_ro_ratio, self.COCurve)
         elif ( gas_id == self.GAS_SMOKE ):
             return self.MQGetPercentage(rs_ro_ratio, self.SmokeCurve)
+        elif ( gas_id == self.GAS_OZONE ):
+            return self.MQGetPercentage(rs_ro_ratio, self.OzoneCurve)
         return 0
      
     #########################  MQGetPercentage #################################
