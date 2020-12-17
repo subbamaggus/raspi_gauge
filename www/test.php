@@ -28,7 +28,7 @@ require("config.php");
       var intervalID;
         
       function initRollingDataArray(length) {
-        var data_head = ['Time',  'Raw'];
+        var data_head = ['Time',  'Data'];
         var data_body_l = [data_head];
 
         for(var i = length; i > 0; i--) {
