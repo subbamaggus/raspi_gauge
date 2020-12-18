@@ -46,9 +46,9 @@ class MQ():
                                             # to the original curve.
                                             # data format:[ x, y, slope]; point1: (lg200, 0.53), point2: (lg10000,  -0.22)  
         # https://forum.arduino.cc/index.php?topic=469459.0
-        #self.OzoneCurve = [2.3,3.6,0.45] # rough estimate for first shot
+        self.OzoneCurve = [2.3,3.6,0.45] # rough estimate for first shot
         # https://datasheetspdf.com/pdf/770517/ETC/MQ-131/1
-        self.OzoneCurve = [-2,0.602,-0.9]
+        #self.OzoneCurve = [1,4.22,-0.0009]
                 
         print("Calibrating...")
         if Ro == None :
@@ -114,7 +114,8 @@ class MQ():
         rs = 0.0
 
         for i in range(self.READ_SAMPLE_TIMES):
-            rs += self.MQResistanceCalculation(self.adc.read_adc(mq_pin, 1))
+            value = self.adc.read_adc(mq_pin, 1)
+            rs += self.MQResistanceCalculation(value)
             time.sleep(self.READ_SAMPLE_INTERVAL/1000.0)
 
         rs = rs/self.READ_SAMPLE_TIMES

@@ -7,6 +7,7 @@
 # License: Public Domain
 import time
 import datetime
+import traceback
 
 from ADS1x15 import ADS1015
 from mq import *
@@ -34,8 +35,8 @@ try:
         smbus_analog_0_curr.close()
         
 
-        smbus_analog_0_curr= open("smbus_A0.ppm","w")
-        smbus_analog_0_curr.write('{}\n'.format(int(perc["OZONE"])))
+        smbus_analog_0_curr= open("smbus_A0.ppb","w")
+        smbus_analog_0_curr.write('{}\n'.format(int(perc["OZONE"] * 1000)))
         smbus_analog_0_curr.close()
     
         # ppm to ugpm3 >> 200ug/m3 ~ 0.1 ppm
@@ -47,3 +48,4 @@ try:
 
 except:
     print("\nAbort by user")
+    traceback.print_exc() 
