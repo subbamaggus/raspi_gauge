@@ -28,7 +28,7 @@ class MQ():
     GAS_SMOKE                    = 2
     GAS_OZONE                    = 3
 
-    def __init__(self, Ro=10, analogPin=0):
+    def __init__(self, Ro=None, analogPin=0):
         self.Ro = Ro
         self.MQ_PIN = analogPin
         self.adc = ADS1015()
@@ -48,10 +48,11 @@ class MQ():
         # https://forum.arduino.cc/index.php?topic=469459.0
         #self.OzoneCurve = [2.3,3.6,0.45] # rough estimate for first shot
         # https://datasheetspdf.com/pdf/770517/ETC/MQ-131/1
-        self.OzoneCurve = [1,0.602,-0.9]
+        self.OzoneCurve = [-2,0.602,-0.9]
                 
         print("Calibrating...")
-        self.Ro = self.MQCalibration(self.MQ_PIN)
+        if Ro == None :
+            self.Ro = self.MQCalibration(self.MQ_PIN)
         print("Calibration is done...\n")
         print("Ro=%f kohm" % self.Ro)
     
