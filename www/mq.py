@@ -46,22 +46,26 @@ class MQ():
                                             # to the original curve.
                                             # data format:[ x, y, slope]; point1: (lg200, 0.53), point2: (lg10000,  -0.22)  
         # https://forum.arduino.cc/index.php?topic=469459.0
-        self.OzoneCurve = [2.3,3.6,0.45] # rough estimate for first shot
+        #self.OzoneCurve = [2.3,3.6,0.45] # rough estimate for first shot
+        # https://datasheetspdf.com/pdf/770517/ETC/MQ-131/1
+        self.OzoneCurve = [1,0.602,-0.9]
                 
         print("Calibrating...")
         self.Ro = self.MQCalibration(self.MQ_PIN)
         print("Calibration is done...\n")
         print("Ro=%f kohm" % self.Ro)
     
+    def MQPercentageValueToArray(self, data):
+        val = {}
+        val["GAS_LPG"]  = self.MQGetGasPercentage(data/self.Ro, self.GAS_LPG)
+        val["CO"]       = self.MQGetGasPercentage(data/self.Ro, self.GAS_CO)
+        val["SMOKE"]    = self.MQGetGasPercentage(data/self.Ro, self.GAS_SMOKE)
+        val["OZONE"]    = self.MQGetGasPercentage(data/self.Ro, self.GAS_OZONE)
+        return val
     
     def MQPercentage(self):
-        val = {}
         read = self.MQRead(self.MQ_PIN)
-        val["GAS_LPG"]  = self.MQGetGasPercentage(read/self.Ro, self.GAS_LPG)
-        val["CO"]       = self.MQGetGasPercentage(read/self.Ro, self.GAS_CO)
-        val["SMOKE"]    = self.MQGetGasPercentage(read/self.Ro, self.GAS_SMOKE)
-        val["OZONE"]    = self.MQGetGasPercentage(read/self.Ro, self.GAS_OZONE)
-        return val
+        return self.MQPercentageValueToArray(read)
         
     ######################### MQResistanceCalculation #########################
     # Input:   raw_adc - raw value read from adc, which represents the voltage
