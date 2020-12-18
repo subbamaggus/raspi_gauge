@@ -10,11 +10,11 @@ function mylog($log_lvl, $log_msg) {
 }
 
 function getDataFromFile($filename) {
-    $data = file_get_contents($filename);
-    $data = substr($data, 0, -1); 
-    mylog(0, $data);
+  $data = file_get_contents($filename);
+  $data = substr($data, 0, -1); 
+  mylog(0, $data);
 
-    return $data;    
+  return $data;    
 }
 
 if (isset($_GET['loglvl']))
