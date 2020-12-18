@@ -1,6 +1,6 @@
 <?php
 
-$MAX_ADC_VALUE = 65535;
+$MAX_ADC_VALUE = 2048;
 
 $DATA_FILE_RAW = "smbus_A0.current";
 $DATA_FILE_PPM = "smbus_A0.ppm";
