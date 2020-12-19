@@ -52,12 +52,15 @@ class MQ():
                                             # with these two points, a line is formed which is "approximately equivalent"
                                             # to the original curve.
                                             # data format:[ x, y, slope]; point1: (lg200, 0.53), point2: (lg10000,  -0.22)
+        # here is how the slope ... is calculated:
         # https://forum.arduino.cc/index.php?topic=469459.0
-        self.Ozone_P1P2 = [200, 4000, 1000, 7000]  # data format: {x1, y1, x2, y2 }
-        self.OzoneCurve = [2.3,3.6,0.45] # rough estimate for first shot
+        
+        # https://aqicn.org/air/view/sensor/spec/o3.winsen-mq131.pdf
+        self.Ozone_P1P2 = [50000, 2.0, 1000000, 7.9]  # data format: {x1, y1, x2, y2 }
+        self.OzoneCurve = [4.7,0.302,0.45] # rough estimate for first shot
         # https://datasheetspdf.com/pdf/770517/ETC/MQ-131/1
-        #self.Ozone_P1P2 = [200, 1.62, 10000, 0.25]  # data format: {x1, y1, x2, y2 }
-        #self.OzoneCurve = [1,4.22,-0.0009]
+        #self.Ozone_P1P2 = [10000, 2.5, 100000, 0.35]  # data format: {x1, y1, x2, y2 }
+        #self.OzoneCurve = [4,0.398,-0.85]
 
         print("Calibrating...")
         if (Ro == None):
@@ -179,4 +182,24 @@ class MQ():
     ############################################################################
     def MQGetPercentage(self, rs_ro_ratio, pcurve):
         return (math.pow(10,( ((math.log(rs_ro_ratio)-pcurve[1])/ pcurve[2]) + pcurve[0])))
+
+    def MQPrintCurveAndP1P2(self):
+        print('{} {}'.format('LPGCurve  ', self.MQPrintCurve(self.LPGCurve)))
+        print('{} {}'.format('LPG_P1P2  ', self.MQPrintCurve(self.MQ_P1P2_To_Curve(self.LPG_P1P2))))
+        print('{} {}'.format('COCurve   ', self.MQPrintCurve(self.COCurve)))
+        print('{} {}'.format('CO_P1P2   ', self.MQPrintCurve(self.MQ_P1P2_To_Curve(self.CO_P1P2))))
+        print('{} {}'.format('SmokeCurve', self.MQPrintCurve(self.SmokeCurve)))
+        print('{} {}'.format('Smoke_P1P2', self.MQPrintCurve(self.MQ_P1P2_To_Curve(self.Smoke_P1P2))))
+        print('{} {}'.format('OzoneCurve', self.MQPrintCurve(self.OzoneCurve)))
+        print('{} {}'.format('Ozone_P1P2', self.MQPrintCurve(self.MQ_P1P2_To_Curve(self.Ozone_P1P2))))
+    
+    def MQPrintCurve(self, pcurve):
+        return 'x-value: {:10.4f}, y-value: {:10.4f}, slope: {:10.4f}'.format(pcurve[0], pcurve[1], pcurve[2])
+    
+    def MQ_P1P2_To_Curve(self, data):
+        my_x = math.log(data[0], 10)
+        my_y = math.log(data[1], 10)
+        my_slope = math.log((data[3]/data[1]), 10) / math.log((data[2]/data[0]), 10)
+
+        return [my_x, my_y, my_slope]
 
