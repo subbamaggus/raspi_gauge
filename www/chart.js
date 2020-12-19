@@ -4,8 +4,8 @@ google.charts.setOnLoadCallback(drawChart);
 var history_length = 180;
 var pollingRate = 1000;
 
-
 var ring_buffer = initRingBuffer(history_length);
+var min_ring_buffer_size = 1;
   
 var history_chart;
 var history_data;
@@ -18,6 +18,9 @@ var gauge_options;
 var intervalID;
   
 function initRingBuffer(length) {
+  if(length < min_ring_buffer_size)
+    length = min_ring_buffer_size;
+    
   var ring_buffer_header = ['Time',  'Data'];
   var ring_buffer_l = [ring_buffer_header];
 
@@ -28,6 +31,9 @@ function initRingBuffer(length) {
 }
 
 function addToRingBuffer(data, length, last_value) {
+  if(length < min_ring_buffer_size)
+    length = min_ring_buffer_size;
+    
   for(var i = 0; i < (length - 1); i++) {
     data.setValue(i, 1, data.getValue(i+1, 1));
   }
@@ -39,6 +45,11 @@ function addToRingBuffer(data, length, last_value) {
   
 function changeRingBufferSize(diff) {
   history_length = history_length + diff;
+  
+  if (history_length < min_ring_buffer_size) {
+    history_length = 0;
+  }
+  
   ring_buffer = initRingBuffer(history_length);
   history_data = google.visualization.arrayToDataTable(ring_buffer);
 
@@ -64,6 +75,10 @@ function pollDataSource() {
 function changePollRate(diff) {
   clearInterval(intervalID);
   pollingRate = pollingRate + diff;
+  
+  if(pollingRate < 500)
+    pollingRate = 500;
+    
   intervalID = setInterval(pollDataSource, pollingRate);
 
   console.log('changePollRate:' + pollingRate);
