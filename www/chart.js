@@ -96,10 +96,10 @@ function drawChart() {
   gauge_options = {
     width: 300, 
     height: 200,
-    max: 800,
+    max: 500,
     greenFrom:    0, greenTo:   40,
     yellowFrom: 180, yellowTo: 240,
-    redFrom:    240, redTo:    800,
+    redFrom:    240, redTo:    500,
     minorTicks: 5
   };
 
