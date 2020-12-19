@@ -29,8 +29,8 @@ class MQ():
     GAS_OZONE                    = 3
 
     ######################### ADC Settins #####################################
-    ADC_TYPE                     = "ADS1015"
-    ADC_MAX_VALUE                = 2047.0
+    ADC_TYPE                     = "ADS1015" # current options: ADS1015, MCP3008
+    ADC_MAX_VALUE                = 2047.0    # ADS1015 is 16 bit (but has 2047), MCP3008 is 10 bit (so has 1023)
 
     def __init__(self, Ro=None, analogPin=0):
         self.Ro = Ro
