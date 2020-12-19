@@ -1,8 +1,4 @@
-<?php
-
-require("config.php");
-
-?><html>
+<html>
   <head>
     <meta name="viewport" content="initial-scale=1, maximum-scale=2">
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
