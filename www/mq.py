@@ -53,7 +53,7 @@ class MQ():
                                             # to the original curve.
                                             # data format:[ x, y, slope]; point1: (lg200, 0.53), point2: (lg10000,  -0.22)
         # https://forum.arduino.cc/index.php?topic=469459.0
-        self.Ozone_P1P2 = [200, 4000, 10000, 0.25]  # data format: {x1, y1, x2, y2 }
+        self.Ozone_P1P2 = [200, 4000, 1000, 7000]  # data format: {x1, y1, x2, y2 }
         self.OzoneCurve = [2.3,3.6,0.45] # rough estimate for first shot
         # https://datasheetspdf.com/pdf/770517/ETC/MQ-131/1
         #self.Ozone_P1P2 = [200, 1.62, 10000, 0.25]  # data format: {x1, y1, x2, y2 }
