@@ -10,8 +10,8 @@ class MQ():
 
     ######################### Hardware Related Macros #########################
     MQ_PIN                       = 0        # define which analog input channel you are going to use (MCP3008)
-    RL_VALUE                     = 5        # define the load resistance on the board, in kilo ohms
-    RO_CLEAN_AIR_FACTOR          = 9.83     # RO_CLEAR_AIR_FACTOR=(Sensor resistance in clean air)/RO,
+    RL_VALUE                     = 1        # define the load resistance on the board, in kilo ohms
+    RO_CLEAN_AIR_FACTOR          = 1     # RO_CLEAR_AIR_FACTOR=(Sensor resistance in clean air)/RO,
                                             # which is derived from the chart in datasheet
 
     ######################### Software Related Macros #########################
@@ -56,10 +56,10 @@ class MQ():
         # https://forum.arduino.cc/index.php?topic=469459.0
         
         # https://aqicn.org/air/view/sensor/spec/o3.winsen-mq131.pdf
-        self.Ozone_P1P2 = [50000, 2.0, 1000000, 7.9]  # data format: {x1, y1, x2, y2 }
-        self.OzoneCurve = [4.7,0.302,0.45] # rough estimate for first shot
+        self.Ozone_P1P2 = [0.05, 2.0, 1, 7.9]  # data format: {x1, y1, x2, y2 }
+        self.OzoneCurve = [-1.301,0.302,0.45] # rough estimate for first shot
         # https://datasheetspdf.com/pdf/770517/ETC/MQ-131/1
-        #self.Ozone_P1P2 = [10000, 2.5, 100000, 0.35]  # data format: {x1, y1, x2, y2 }
+        #self.Ozone_P1P2 = [0.01, 2.5, 0.10, 0.35]  # data format: {x1, y1, x2, y2 }
         #self.OzoneCurve = [4,0.398,-0.85]
 
         print("Calibrating...")
@@ -110,12 +110,13 @@ class MQ():
     def MQCalibration(self, mq_pin):
         val = 0.0
         for i in range(self.CALIBARAION_SAMPLE_TIMES):          # take multiple samples
-            print('sample {} ...'.format(i))
             raw_value = self.MQReadRaw(mq_pin)
+            print('sample {} ... : raw value {}'.format(i, raw_value))
             val += self.MQResistanceCalculation(raw_value)
             time.sleep(self.CALIBRATION_SAMPLE_INTERVAL/1000.0)
 
         val = val/self.CALIBARAION_SAMPLE_TIMES                 # calculate the average value
+        print('calcucated Rs {} kOhm'.format(val))
 
         val = val/self.RO_CLEAN_AIR_FACTOR                      # divided by RO_CLEAN_AIR_FACTOR yields the Ro
                                                                 # according to the chart in the datasheet

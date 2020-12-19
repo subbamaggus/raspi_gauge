@@ -26,7 +26,7 @@ try:
         value = adc.read_adc(0, 1)
         perc = mq.MQPercentage()
     
-        print('| {} | {} | {}'.format(date, value, int(perc["OZONE"])))
+        print('| {} | {} | {}'.format(date, value, perc["OZONE"]))
 
         smbus_analog_0.write('{},{},{}\n'.format(date, value, int(perc["OZONE"])))
     
