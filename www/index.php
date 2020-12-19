@@ -25,29 +25,29 @@ require("config.php");
       var pollingRate = <?php echo $POLLING_RATE; ?>;
       
 
-      var data_body = initRollingDataArray(history_length);
+      var ring_buffer = initRingBuffer(history_length);
         
-      var data_history;
-      var chart_history;
-      var options_history;
+      var history_chart;
+      var history_data;
+      var history_options;
         
-      var data_gauge;
-      var chart_gauge;
-      var options_gauge;
+      var gauge_chart;
+      var gauge_data;
+      var gauge_options;
 		
       var intervalID;
         
-      function initRollingDataArray(length) {
-        var data_head = ['Time',  'Data'];
-        var data_body_l = [data_head];
+      function initRingBuffer(length) {
+        var ring_buffer_header = ['Time',  'Data'];
+        var ring_buffer_l = [ring_buffer_header];
 
         for(var i = length; i > 0; i--) {
-            data_body_l.push(['' + i, 0]);
+            ring_buffer_l.push(['' + i, 0]);
         }
-        return data_body_l;
+        return ring_buffer_l;
       }
 
-      function appendRollingValue(data, length, last_value) {
+      function addToRingBuffer(data, length, last_value) {
         for(var i = 0; i < (length - 1); i++) {
           data.setValue(i, 1, data.getValue(i+1, 1));
         }
@@ -57,12 +57,12 @@ require("config.php");
         return data;
       }
         
-      function changeBufferSize(diff) {
+      function changeRingBufferSize(diff) {
         history_length = history_length + diff;
-        data_body = initRollingDataArray(history_length);
-        data_history = google.visualization.arrayToDataTable(data_body);
+        ring_buffer = initRingBuffer(history_length);
+        history_data = google.visualization.arrayToDataTable(ring_buffer);
 
-        console.log('changeBufferSize:' + history_length);
+        console.log('changeRingBufferSize:' + history_length);
       }
         
       function pollDataSource() {
@@ -72,13 +72,13 @@ require("config.php");
           dataType: "json",
           async: false
           }).responseText;
-        var myObj = JSON.parse(jsonData);
+        var DataObject = JSON.parse(jsonData);
 
-        data_history = appendRollingValue(data_history, history_length, myObj.ugpm3);
-        chart_history.draw(data_history, options_history);
+        history_data = addToRingBuffer(history_data, history_length, DataObject.ugpm3);
+        history_chart.draw(history_data, history_options);
 
-        data_gauge.setValue(0, 1, myObj.ugpm3);
-        chart_gauge.draw(data_gauge, options_gauge);
+        gauge_data.setValue(0, 1, DataObject.ugpm3);
+        gauge_chart.draw(gauge_data, gauge_options);
       }
 
       function changePollRate(diff) {
@@ -92,13 +92,13 @@ require("config.php");
 
       function drawChart() {
 
-        data_gauge = google.visualization.arrayToDataTable([
+        gauge_data = google.visualization.arrayToDataTable([
           ['Label', 'Value'],
-          ['O3 µg/m³', 80]
+          ['O3 µg/m³', 0]
         ]);
 
         // source for yellow and red: https://www.lfu.bayern.de/luft/doc/ozoninfo.pdf
-        options_gauge = {
+        gauge_options = {
           width: 300, 
           height: 200,
           max: <?php echo $MAX_CHART_VALUE; ?>,
@@ -108,11 +108,11 @@ require("config.php");
           minorTicks: 5
         };
 
-        chart_gauge = new google.visualization.Gauge(document.getElementById('chart_gauge'));
-        chart_gauge.draw(data_gauge, options_gauge);
+        gauge_chart = new google.visualization.Gauge(document.getElementById('gauge_chart'));
+        gauge_chart.draw(gauge_data, gauge_options);
 
         // second chart
-        options_history = {
+        history_options = {
           title: 'O3 µg/m³',
           legend: { position: 'bottom' },
           vAxis: {
@@ -122,9 +122,9 @@ require("config.php");
           isStacked: true
         };
 
-        chart_history = new google.visualization.SteppedAreaChart(document.getElementById('chart_history'));
-        data_history = google.visualization.arrayToDataTable(data_body);
-        chart_history.draw(data_history, options_history);
+        history_chart = new google.visualization.SteppedAreaChart(document.getElementById('history_chart'));
+        history_data = google.visualization.arrayToDataTable(ring_buffer);
+        history_chart.draw(history_data, history_options);
 
         document.getElementById("refresh_rate").innerHTML = "RefreshRate: " + pollingRate;
         intervalID = setInterval(pollDataSource, pollingRate);
@@ -133,11 +133,11 @@ require("config.php");
   </head>
   <body>
     <center>
-      <div id="chart_gauge" style="width: 300px; height: 200px;"></div>
-      <div id="chart_history" style="width: 400px; height: 250px;"></div>
-      <input type="image" width="12" height="12" src="icon/plus.png" onclick="changeBufferSize(30)" />
+      <div id="gauge_chart" style="width: 300px; height: 200px;"></div>
+      <div id="history_chart" style="width: 400px; height: 250px;"></div>
+      <input type="image" width="12" height="12" src="icon/plus.png" onclick="changeRingBufferSize(30)" />
       <input type="image" width="12" height="12" src="icon/time.png" />
-      <input type="image" width="12" height="12" src="icon/minus.png" onclick="changeBufferSize(-30)" />
+      <input type="image" width="12" height="12" src="icon/minus.png" onclick="changeRingBufferSize(-30)" />
       |
       <input type="image" width="12" height="12" src="icon/slower.png" onClick="changePollRate(500)" />
       <input type="image" width="12" height="12" src="icon/faster.png" onClick="changePollRate(-500)" />
