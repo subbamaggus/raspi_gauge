@@ -112,7 +112,8 @@ function drawChart() {
     legend: { position: 'bottom' },
     vAxis: {
       minValue: 0,
-      maxValue: 800
+      maxValue: 800,
+      scaleType: 'log'
     },
     isStacked: true
   };
