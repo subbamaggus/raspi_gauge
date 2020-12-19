@@ -37,21 +37,26 @@ class MQ():
         self.MQ_PIN = analogPin
         self.adc = self.MQLoadAdc()
 
+        self.LPG_P1P2 = [200, 1.62, 10000, 0.25]  # data format: {x1, y1, x2, y2 }
         self.LPGCurve = [2.3,0.21,-0.47]    # two points are taken from the curve.
                                             # with these two points, a line is formed which is "approximately equivalent"
                                             # to the original curve.
                                             # data format:{ x, y, slope}; point1: (lg200, 0.21), point2: (lg10000, -0.59)
+        self.CO_P1P2 = [200, 5.24, 10000, 1.41]  # data format: {x1, y1, x2, y2 }
         self.COCurve = [2.3,0.72,-0.34]     # two points are taken from the curve.
                                             # with these two points, a line is formed which is "approximately equivalent"
                                             # to the original curve.
                                             # data format:[ x, y, slope]; point1: (lg200, 0.72), point2: (lg10000,  0.15)
+        self.Smoke_P1P2 = [200, 3.39, 10000, 0.6025]  # data format: {x1, y1, x2, y2 }
         self.SmokeCurve = [2.3,0.53,-0.44]   # two points are taken from the curve.
                                             # with these two points, a line is formed which is "approximately equivalent"
                                             # to the original curve.
                                             # data format:[ x, y, slope]; point1: (lg200, 0.53), point2: (lg10000,  -0.22)
         # https://forum.arduino.cc/index.php?topic=469459.0
+        self.Ozone_P1P2 = [200, 4000, 10000, 0.25]  # data format: {x1, y1, x2, y2 }
         self.OzoneCurve = [2.3,3.6,0.45] # rough estimate for first shot
         # https://datasheetspdf.com/pdf/770517/ETC/MQ-131/1
+        #self.Ozone_P1P2 = [200, 1.62, 10000, 0.25]  # data format: {x1, y1, x2, y2 }
         #self.OzoneCurve = [1,4.22,-0.0009]
 
         print("Calibrating...")
@@ -114,6 +119,10 @@ class MQ():
 
         return val;
 
+    #########################  MQReadRaw ##########################################
+    # Input:   mq_pin - analog channel
+    # Output:  raw value of the adc
+    ############################################################################
     def MQReadRaw(self, mq_pin):
         if (self.ADC_TYPE == "ADS1015"):
             gain = 1
