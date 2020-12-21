@@ -4,7 +4,7 @@
 
 copy everything under `www/` to root folder of your webserver (php has to be enabled), default for raspberry `/var/www/html/`
 
-there is no security settins to make it easier to read and understand
+there is no security settings to make it easier to read and understand
 
 ### index.php 
 
