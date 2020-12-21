@@ -23,6 +23,7 @@ start `python readdata.py`
 this uses a lib `mq.py` which is form:
 
 adapted from http://sandboxelectronics.com/?p=165
+
 adapted form https://github.com/tutRPi/Raspberry-Pi-Gas-Sensor-MQ
 
 this will read the start value from ADC and set this as "fresh air" value
