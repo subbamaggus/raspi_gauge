@@ -4,23 +4,29 @@
 
 copy everything under `www/` to root folder of your webserver (php has to be enabled), default for raspberry `/var/www/html/`
 
-there i no security settins to make it easier to read and understand
+there is no security settins to make it easier to read and understand
 
 ### index.php 
 
-start page for browser access
-loads a gauge and history diagramm
+start page for browser access loads a gauge and history diagramm (google charts)
 
 ### api.php
 
 data for it will be loaded as json
+
 data will be read from data access files described below
 
 ## data access
 
-start python readdata.py
+start `python readdata.py`
+
+this uses a lib `mq.py` which is form:
+
+adapted from http://sandboxelectronics.com/?p=165
+adapted form https://github.com/tutRPi/Raspberry-Pi-Gas-Sensor-MQ
 
 this will read the start value from ADC and set this as "fresh air" value
+
 this will write data (see file for more details) every 0.5 sec to 
 
 ```
