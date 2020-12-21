@@ -1,5 +1,6 @@
 
 # adapted from sandboxelectronics.com/?p=165
+# adapted form https://github.com/tutRPi/Raspberry-Pi-Gas-Sensor-MQ
 
 import time
 import math
