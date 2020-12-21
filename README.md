@@ -63,3 +63,9 @@ https://aqicn.org/air/view/sensor/spec/o3.winsen-mq131.pdf
     GND
 
 ```
+
+## Raspberry ADC MQ-131 Module
+
+![Raspberry](https://raw.githubusercontent.com/subbamaggus/raspi_gauge/raspberry.jpg)
+![ADS1115](https://raw.githubusercontent.com/subbamaggus/raspi_gauge/ads1115.jpg)
+![Raspberry](https://raw.githubusercontent.com/subbamaggus/raspi_gauge/mq131.jpg)
