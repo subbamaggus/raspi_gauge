@@ -1,6 +1,5 @@
 # raspi_gauge
 
-if you have questions or ideas: subbamaggus@gmx.de
 
 ## http access
 
@@ -71,3 +70,6 @@ https://aqicn.org/air/view/sensor/spec/o3.winsen-mq131.pdf
 ![Raspberry](https://github.com/subbamaggus/raspi_gauge/blob/main/raspberry.jpg?raw=true)
 ![ADS1115](https://github.com/subbamaggus/raspi_gauge/blob/main/ads1115.jpg?raw=true)
 ![Raspberry](https://github.com/subbamaggus/raspi_gauge/blob/main/mq131-board.jpg?raw=true)
+
+
+if you have questions or ideas: subbamaggus@gmx.de
