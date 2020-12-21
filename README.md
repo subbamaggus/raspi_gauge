@@ -1,5 +1,7 @@
 # raspi_gauge
 
+if you have questions or ideas: subbamaggus@gmx.de
+
 ## http access
 
 copy everything under `www/` to root folder of your webserver (php has to be enabled), default for raspberry `/var/www/html/`
