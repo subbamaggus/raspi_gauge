@@ -2,7 +2,7 @@
 
 ## http access
 
-copy everything under www/ to root folder of your webserver (php has to be enabled), default for raspberry /var/www/html/
+copy everything under `www/` to root folder of your webserver (php has to be enabled), default for raspberry `/var/www/html/`
 
 there i no security settins to make it easier to read and understand
 
@@ -23,10 +23,12 @@ start python readdata.py
 this will read the start value from ADC and set this as "fresh air" value
 this will write data (see file for more details) every 0.5 sec to 
 
-> smbus_A0.current
-> smbus_A0.ppb
-> smbus_A0.ugpm3
-> smbus_A0.csv
+```
+smbus_A0.current
+smbus_A0.ppb
+smbus_A0.ugpm3
+smbus_A0.csv
+```
 
 and to the console
 
