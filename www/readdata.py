@@ -9,13 +9,13 @@ import time
 import datetime
 import traceback
 
-from ADS1x15 import ADS1015
+from ADS1x15 import ADS1115
 from mq import *
 
 try:
     print('Reading ADS1x15 values, press Ctrl-C to quit...')
     
-    adc = ADS1015()
+    adc = ADS1115()
     mq = MQ();
     
     smbus_analog_0= open("smbus_A0.csv","a+")    

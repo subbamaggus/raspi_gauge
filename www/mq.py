@@ -1,11 +1,10 @@
 
 # adapted from sandboxelectronics.com/?p=165
-# adapted form https://github.com/tutRPi/Raspberry-Pi-Gas-Sensor-MQ
 
 import time
 import math
 from MCP3008 import MCP3008
-from ADS1x15 import ADS1015
+from ADS1x15 import ADS1115
 
 class MQ():
 
@@ -30,8 +29,8 @@ class MQ():
     GAS_OZONE                    = 3
 
     ######################### ADC Settins #####################################
-    ADC_TYPE                     = "ADS1015" # current options: ADS1015, MCP3008
-    ADC_MAX_VALUE                = 2047.0    # ADS1015 is 16 bit (but has 2047), MCP3008 is 10 bit (so has 1023)
+    ADC_TYPE                     = "ADS1115" # current options: ADS1115, MCP3008
+    ADC_MAX_VALUE                = 32752.0    # ADS1115 is 16 bit, MCP3008 is 10 bit (so has 1023)
 
     def __init__(self, Ro=None, analogPin=0):
         self.Ro = Ro
@@ -70,9 +69,9 @@ class MQ():
         print("Ro=%f kohm" % self.Ro)
 
     def MQLoadAdc(self):
-        if (self.ADC_TYPE == "ADS1015"):
-            ADC_MAX_VALUE = 2047.0
-            return ADS1015()
+        if (self.ADC_TYPE == "ADS1115"):
+            ADC_MAX_VALUE = 32752.0
+            return ADS1115()
         else:
             ADC_MAX_VALUE = 1023.0
             return MCP3008()
@@ -129,7 +128,7 @@ class MQ():
     # Output:  raw value of the adc
     ############################################################################
     def MQReadRaw(self, mq_pin):
-        if (self.ADC_TYPE == "ADS1015"):
+        if (self.ADC_TYPE == "ADS1115"):
             gain = 1
             return self.adc.read_adc(mq_pin, gain)
         else:
