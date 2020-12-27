@@ -8,9 +8,11 @@
 import time
 import datetime
 import traceback
+import sys
 
 from ADS1x15 import ADS1115
 from mq import *
+import Adafruit_DHT
 
 try:
     print('Reading ADS1x15 values, press Ctrl-C to quit...')
@@ -25,10 +27,11 @@ try:
     
         value = adc.read_adc(0, 1)
         perc = mq.MQPercentage()
+        humidity, temperature = Adafruit_DHT.read_retry(11, 4)
     
-        print('| {} | {} | {}'.format(date, value, perc["OZONE"]))
+        print('| {} | {} | {} | {} | {} | {}'.format(date, value, value/4, humidity, temperature, perc["OZONE"]))
 
-        smbus_analog_0.write('{},{},{}\n'.format(date, value, int(perc["OZONE"])))
+        smbus_analog_0.write('{},{},{},{},{},{}\n'.format(date, value, value/4, humidity, temperature, int(perc["OZONE"])))
     
         smbus_analog_0_curr= open("smbus_A0.current","w")
         smbus_analog_0_curr.write('{}\n'.format(value))
