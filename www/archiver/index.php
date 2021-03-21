@@ -25,15 +25,17 @@ class MyArchiverAPI {
   function storeData($data) {
     $sql = "INSERT INTO sensor_data (name, timestamp, value_no) VALUES (?, ?, ?)";
            
-    $statement = self::$mysqli->prepare($sql);
-    //$statement->bind_param('sii', 'data', $data['data']['date'], $data['data']['value']);
-    //$statement->execute();
-    
     $timestamp = strtotime($data['data']['date']);
+    $value = "" . $data['data']['value'];
+    $sensor = "data";
+    
+    $statement = self::$mysqli->prepare($sql);
+    $statement->bind_param('sii', $data, $timestamp, $value);
+    $statement->execute();
 
-    $result = "#" . $timestamp . "#" . $data['data']['date']. "#" . $data['data']['value'];
+    //$result = "#" . $timestamp . "#" . $data['data']['date']. "#" . $data['data']['value'];
 
-    //$result = $statement->get_result();
+    $result = $statement->get_result();
 
     return $result;
   }
