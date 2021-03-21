@@ -29,6 +29,31 @@ class MyArchiverAPI {
 
     return $result;
   }
+  
+  function getLatestRecord($sensor) {
+    $sql = "SELECT * FROM sensor_data" .
+           " WHERE name = ?  ORDER BY id DESC LIMIT 1";
+           
+    $statement = self::$mysqli->prepare($sql);
+    $statement->bind_param('s', $sensor);
+    $statement->execute();
+    
+    $result = $statement->get_result();
+
+    $all_items = mysqli_fetch_all($result,MYSQLI_ASSOC);
+    
+    $date = date("Y-m-d H:i:s");
+    $value = $all_items[0]['value_no'];
+    
+    $result = [ "date" => $date,
+            "raw" => $value,
+            "ppm" => $value,
+            "ugpm3" => $value,
+            "linear" => $value
+          ];
+          
+    return $result;
+  }
 }
 
 ?>

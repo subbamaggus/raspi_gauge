@@ -55,14 +55,8 @@ function changeRingBufferSize(diff) {
 
   console.log('changeRingBufferSize:' + history_length);
 }
-  
-function pollDataSource() {
 
-  var jsonData = $.ajax({
-    url: "api.php",
-    dataType: "json",
-    async: false
-    }).responseText;
+function processData(jsonData) {
   var DataObject = JSON.parse(jsonData);
 
   history_data = addToRingBuffer(history_data, history_length, DataObject.raw);
@@ -70,6 +64,21 @@ function pollDataSource() {
 
   gauge_data.setValue(0, 1, DataObject.raw);
   gauge_chart.draw(gauge_data, gauge_options);
+}
+
+function handler() {
+  if(this.status == 200 &&
+    this.responseText != null ) {
+    // success!
+    processData(this.responseText);
+  }
+}
+
+function pollDataSource() {
+  var client = new XMLHttpRequest();
+  client.onload = handler;
+  client.open("GET", "api.php");
+  client.send();
 }
 
 function changePollRate(diff) {
