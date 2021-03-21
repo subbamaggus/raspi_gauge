@@ -11,14 +11,13 @@ with open('data/data.csv') as csvfile:
     for row in spamreader:
         print(':'.join(row))
     
-        data['data'] = []
-        data['data'].append({
+        data['data'] = ({
             'date': row[0],
             'sensor': 'data',
             'value': row[1]
         })
 
-print('data: {}'.format(json.dumps(data)))
+print('json: {}'.format(json.dumps(data)))
 
 print('building request')
 
