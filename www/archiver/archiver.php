@@ -45,9 +45,7 @@ class MyArchiverAPI {
     $all_items = mysqli_fetch_all($result,MYSQLI_ASSOC);
     
     $ts = $all_items[0]['timestamp'];
-    echo $ts;
     $date = date('Y-m-d H:i:s e', $ts);
-    echo $date;
     
     $value = $all_items[0]['value_no'];
     
