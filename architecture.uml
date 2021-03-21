@@ -1,0 +1,19 @@
+@startuml
+node "DataStore" {
+  HTTP <--> [Archiver]
+  database "sensor_data" {
+    [db] 
+  }
+  [Archiver] --> [db]
+  [Display] <-- HTTP
+}
+
+node "Folder" {
+  File --> [Collector]
+  [Collector] --> HTTP
+}
+
+[Sensor] --> File
+
+[WebDisplay] <--> [Display]
+@enduml
