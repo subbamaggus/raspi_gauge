@@ -98,7 +98,7 @@ function drawChart() {
 
   gauge_data = google.visualization.arrayToDataTable([
     ['Label', 'Value'],
-    ['O3 Âµg/mÂ³', 0]
+    ['O3 µg/m³', 0]
   ]);
 
   // source for yellow and red: https://www.lfu.bayern.de/luft/doc/ozoninfo.pdf
@@ -117,7 +117,7 @@ function drawChart() {
 
   // second chart
   history_options = {
-    title: 'O3 Âµg/mÂ³',
+    title: 'O3 µg/m³',
     legend: { position: 'bottom' },
     vAxis: {
       minValue: 0,
