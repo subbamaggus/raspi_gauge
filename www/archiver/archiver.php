@@ -14,8 +14,10 @@ class MyArchiverAPI {
   
   function storeData($data) {
     $sql = "INSERT INTO sensor_data (name, timestamp, value_no) VALUES (?, ?, ?)";
-           
-    $timestamp = strtotime($data['data']['date']);
+    
+    $date = new DateTime($data['data']['date'], new DateTimeZone('UTC'));
+    $timestamp = $date->format('U');
+
     $value = "" . $data['data']['value'];
     $sensor = "data";
     
@@ -42,7 +44,11 @@ class MyArchiverAPI {
 
     $all_items = mysqli_fetch_all($result,MYSQLI_ASSOC);
     
-    $date = date("Y-m-d H:i:s");
+    $ts = $all_items[0]['timestamp'];
+    echo $ts;
+    $date = date('Y-m-d H:i:s e', $ts);
+    echo $date;
+    
     $value = $all_items[0]['value_no'];
     
     $result = [ "date" => $date,
