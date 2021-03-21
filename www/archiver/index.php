@@ -30,7 +30,7 @@ class MyArchiverAPI {
     $sensor = "data";
     
     $statement = self::$mysqli->prepare($sql);
-    $statement->bind_param('sii', $data, $timestamp, $value);
+    $statement->bind_param('sii', $sensor, $timestamp, $value);
     $statement->execute();
 
     //$result = "#" . $timestamp . "#" . $data['data']['date']. "#" . $data['data']['value'];
