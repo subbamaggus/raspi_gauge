@@ -5,7 +5,7 @@ import csv
 print('building data')
 data = {}
 
-with open('data/data.csv') as csvfile:
+with open('../data/data.csv') as csvfile:
     spamreader = csv.reader(csvfile, delimiter=',')
     for row in spamreader:
         print(':'.join(row))
@@ -19,7 +19,7 @@ print('json: {}'.format(json.dumps(data)))
 
 
 print('building request')
-url = "http://localhost/archiver.php"
+url = "http://www.ibkerle.de/archiver/?auth=f03ada5ae38129d70e0b3c9992df812c"
 headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
 
 
