@@ -30,3 +30,4 @@ print('sending request')
 r = requests.post(url, data=json.dumps(data), headers=headers)
 
 print('request status {}'.format(r.status_code))
+print(r.content)
