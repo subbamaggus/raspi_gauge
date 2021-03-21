@@ -29,7 +29,7 @@ try:
     
         print('| {} | {} | {} | {} | {}'.format(date, value, humidity, temperature, perc["OZONE"]))
 
-        smbus_analog_0_curr= open("data.csv","w")
+        smbus_analog_0_curr= open("data/data.csv","w")
         smbus_analog_0_curr.write('{},{},{},{},{}\n'.format(date, value, humidity, temperature, int(perc["OZONE"])))
         smbus_analog_0_curr.close()
         
