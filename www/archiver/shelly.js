@@ -92,7 +92,7 @@ function changePollRate(diff) {
   intervalID = setInterval(pollDataSource, pollingRate);
 
   console.log('changePollRate:' + pollingRate);
-  document.getElementById("refresh_rate").innerHTML = "RefreshRate: " + pollingRate;
+  document.getElementById("refresh_rate").innerHTML = "RefreshRate [ms]: " + pollingRate;
 }
 
 function drawChart() {
