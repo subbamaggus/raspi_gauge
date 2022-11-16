@@ -3,6 +3,7 @@ google.charts.setOnLoadCallback(drawChart);
 
 var history_length = 180;
 var pollingRate = 1000;
+var called_url = "http://192.168.178.115/meter/1";
 
 var ring_buffer = initRingBuffer(history_length);
 var min_ring_buffer_size = 1;
@@ -77,7 +78,7 @@ function handler() {
 function pollDataSource() {
   var client = new XMLHttpRequest();
   client.onload = handler;
-  client.open("GET", "http://192.168.178.115/meter/1");
+  client.open("GET", called_url);
   client.send();
 }
 
@@ -121,7 +122,7 @@ function drawChart() {
     legend: { position: 'bottom' },
     vAxis: {
       minValue: 0,
-      maxValue: 800,
+      maxValue: 2000,
       scaleType: 'log'
     },
     isStacked: true
@@ -131,6 +132,6 @@ function drawChart() {
   history_data = google.visualization.arrayToDataTable(ring_buffer);
   history_chart.draw(history_data, history_options);
 
-  document.getElementById("refresh_rate").innerHTML = "RefreshRate: " + pollingRate;
+  document.getElementById("refresh_rate").innerHTML = "RefreshRate [ms]: " + pollingRate;
   intervalID = setInterval(pollDataSource, pollingRate);
 }
