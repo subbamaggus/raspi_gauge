@@ -1,7 +1,7 @@
 google.charts.load('current', {'packages':['corechart','gauge']});
 google.charts.setOnLoadCallback(drawChart);
 
-var history_length = 180;
+var history_length = 600;
 var pollingRate = 1000;
 var called_url = "http://192.168.178.115/meter/1";
 
@@ -17,7 +17,11 @@ var gauge_data;
 var gauge_options;
 
 var intervalID;
-  
+
+function useUrl() {
+  called_url = document.getElementById("data_source").value;
+}
+
 function initRingBuffer(length) {
   if(length < min_ring_buffer_size)
     length = min_ring_buffer_size;
@@ -106,10 +110,10 @@ function drawChart() {
   gauge_options = {
     width: 300, 
     height: 200,
-    max: 2000,
-    greenFrom:   500, greenTo:  1000,
-    yellowFrom: 1000, yellowTo: 1500,
-    redFrom:    1500, redTo:    2000,
+    max: 3000,
+    greenFrom:  1500, greenTo:  2000,
+    yellowFrom: 2000, yellowTo: 2500,
+    redFrom:    2500, redTo:    3000,
     minorTicks: 5
   };
 
@@ -122,8 +126,7 @@ function drawChart() {
     legend: { position: 'bottom' },
     vAxis: {
       minValue: 0,
-      maxValue: 2000,
-      scaleType: 'log'
+      maxValue: 3000
     },
     isStacked: true
   };
@@ -134,4 +137,5 @@ function drawChart() {
 
   document.getElementById("refresh_rate").innerHTML = "RefreshRate [ms]: " + pollingRate;
   intervalID = setInterval(pollDataSource, pollingRate);
+  document.getElementById("data_source").value = called_url;
 }

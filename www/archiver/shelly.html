@@ -9,6 +9,9 @@
             font-family: Arial, Helvetica, sans-serif;
             font-size: xx-small;
         }
+        input[type=url] {
+            font-size: xx-small;
+        }
     </style>
 
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
@@ -16,6 +19,7 @@
   </head>
   <body>
     <center>
+      <input type="url" id="data_source" size="30"/> <input type="image" width="12" height="12" src="icon/switch-icon.png" onClick="useUrl()" />
       <div id="gauge_chart" style="width: 300px; height: 200px;"></div>
       <div id="history_chart" style="width: 400px; height: 250px;"></div><label id="buffer_size">Buffer Size</label>
       <input type="image" width="12" height="12" src="icon/plus.png" onclick="changeRingBufferSize(30)" />
@@ -24,7 +28,7 @@
       |
       <input type="image" width="12" height="12" src="icon/slower.png" onClick="changePollRate(500)" />
       <input type="image" width="12" height="12" src="icon/faster.png" onClick="changePollRate(-500)" />
-      <label id="refresh_rate"></label>
+      <label id="refresh_rate"></label>      
     </center>
   </body>
 </html>
